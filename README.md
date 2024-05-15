@@ -1,5 +1,7 @@
 # 🤖 Numo
-![Group 224](https://github.com/numotrade/numo/assets/44106773/e3534ab9-122a-4b53-be95-a211e88c7608)
+
+![Group 224](https://github.com/numotrade/numo/assets/44106773/6e2e3ef8-708c-4e4b-90e6-0d332c9cdea0)
+
 
 The repository contains the smart contract suite for the Numo protocol. An implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM that replicates a power⁴ perpetual without needing oracles or sophisticated market makers.
 
