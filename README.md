@@ -1,8 +1,11 @@
-# ⚡ PowerMaker2
+# 🤖 Numo
+![Group 224](https://github.com/numotrade/numo/assets/44106773/e3534ab9-122a-4b53-be95-a211e88c7608)
 
-![banner](images/Banner.png)
+The repository contains the smart contract suite for the Numo protocol. An implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM that replicates a power⁴ perpetual without needing oracles or sophisticated market makers.
 
-Smart contracts suite of PowerMaker2, an automated market maker implementaion of the capped power-4 invariant for replicating power perpetuals raised to the fourth power on the EVM.
+### What is a power⁴ perpetual? 
+
+It is a novel financial derivative that simplifies the exposure of a call option into a single contract with no expirys. Traders can now enchance their leverage or hedging strategies with a crypto-native, high composable, on-chain convexity instrument. 
 
 ## Local development
 
