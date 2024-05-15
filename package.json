@@ -1,0 +1,42 @@
+{
+  "name": "@numo/powermaker",
+  "description": "Automated market maker for power perpetuals",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.3",
+    "@commitlint/config-conventional": "^17.4.3",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "prettier": "^2.8.4",
+    "prettier-plugin-solidity": "^1.1.2",
+    "solhint": "^3.3.8",
+    "solhint-plugin-prettier": "^0.0.5"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "forge",
+    "foundry",
+    "smart-contracts",
+    "solidity",
+    "template"
+  ],
+  "packageManager": "pnpm@7.26.0",
+  "private": true,
+  "scripts": {
+    "build": "forge build",
+    "clean": "rm -rf cache out",
+    "test": "forge test --no-match-path src/core/Lendgine.sol",
+    "lint": "forge fmt",
+    "lint:ci": "forge fmt --check",
+    "lint:sol": "solhint \"{src,test}/**/*.sol\"",
+    "postinstall": "husky install",
+    "prettier:check": "prettier --check \"**/*.{json,md,sol,yml}\"",
+    "prettier:write": "prettier --write \"**/*.{json,md,sol,yml}\""
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  }
+}
