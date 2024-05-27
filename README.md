@@ -2,12 +2,11 @@
 
 ![Group 224](https://github.com/numotrade/numo/assets/44106773/6e2e3ef8-708c-4e4b-90e6-0d332c9cdea0)
 
-
-The repository contains the smart contract suite for the Numo protocol. An implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM that replicates a power⁴ perpetual without needing oracles or sophisticated market makers.
+The repository contains the smart contract suite for Numo -- the solidity implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM. One that replicates a power⁴ perpetual without needing oracles or sophisticated market makers. The effect is a simple, easy-to-manage way of accessing leverage on any token.
 
 ### What is a power⁴ perpetual? 
 
-It is a novel financial derivative that simplifies the exposure of a call option into a single contract with no expirys. Traders can now enchance their leverage or hedging strategies with a crypto-native, high composable, on-chain convexity instrument. 
+It's an intsrument that gives you 100x+ leverage depending on the strike price you set. Power perpetuals were invented to simplify the European call option into a single contract with no expirys. Traders can now enchance their leverage or hedging strategies with a crypto-native, high composable, on-chain convexity instrument. 
 
 ## Local development
 
