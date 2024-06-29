@@ -2,11 +2,17 @@
 
 ![Group 224](https://github.com/numotrade/numo/assets/44106773/6e2e3ef8-708c-4e4b-90e6-0d332c9cdea0)
 
-The repository contains the smart contract suite for Numo -- the solidity implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM. One that replicates a power⁴ perpetual without needing oracles or sophisticated market makers. The effect is a simple, easy-to-manage way of accessing leverage on any token.
+The repository contains the smart contract suite for **Numo2**, the solidity implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM. 
 
-### What is a power⁴ perpetual? 
+## A replicating market maker
 
-It's an intsrument that gives you 100x+ leverage depending on the strike price you set. Power perpetuals were invented to simplify the European call option into a single contract with no expirys. Traders can now enchance their leverage or hedging strategies with a crypto-native, high composable, on-chain convexity instrument. 
+The principle idea of a replicating market maker is that any options strategy can be constructed on the EVM simply by altering the trading function of a CFMM. 
+
+**Numo2** is built on this premise and has implemented as a trading function that quadruples the returns of any token across every price. Unique to **Numo2** is its support for any token. It can do this because it requires no oracles or sophisticated market makers. The result is a simple way of accessing leverage on any token.
+
+### Quadrupling returns strategy 
+
+**Numo2** runs a continous automated options strategy that quadruples your returns at every price up until you hit your strike price. The strategy is implemented as a **trading function** of the automated market maker so that the pools of tokens always rebalance to reflect a *leveraged position*. 
 
 ## Local development
 
