@@ -1,4 +1,4 @@
-# 🤖 Numo
+# 🤖 Numo2
 
 ![Group 224](https://github.com/numotrade/numo/assets/44106773/6e2e3ef8-708c-4e4b-90e6-0d332c9cdea0)
 
