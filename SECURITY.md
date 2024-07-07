@@ -2,13 +2,12 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The Numo2 codebase is under audit and Numo v.1 is out of date.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| v.1.x   | :white_check_mark: |
-| v.0.x   | :x:                |
+| v.2.    | :white_check_mark: |
+| v.1     | :x:                |
 
 
 ## Reporting a Vulnerability
