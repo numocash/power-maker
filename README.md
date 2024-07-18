@@ -6,11 +6,11 @@ The repository contains the smart contract suite for **Numo**, the solidity impl
 
 ## A replicating market maker
 
-The principle idea of a replicating market maker is that any options strategy can be constructed on the EVM simply by altering the trading function of a CFMM. **Numo** is built on this premise and has implemented as a trading function that gives traders 100x leverage on any token. Unique to **Numo** is the ability to create any market. It can do this because it requires no oracles or sophisticated market makers.
+The principle idea of a replicating market maker is that any options strategy can be constructed on the EVM simply by altering the trading function of a CFMM. **Numo** is built on this premise and has implemented as a trading function that gives traders 100x leverage on any token. Unique to **Numo** is the ability to get leverage on any market. It can do this because it requires no oracles or sophisticated market makers.
 
 ### Leverage token 
 
-When someone uses **Numo** to get leverage, they are swapping there token into a leverage token which automatically rebalances at every price to reflect 100x leverage. This of it like a 2x leverage token on ETH (ex. ETH2x-FLI), but instead its 100x and supports any token.
+When someone uses **Numo** to get leverage, they are swapping their token into a leverage token which automatically rebalances at every price to reflect 100x leverage. Think of it as a 2x leverage token on ETH (ex. ETH2x-FLI), but instead its 100x and supports any token.
 
 ## Local development
 
