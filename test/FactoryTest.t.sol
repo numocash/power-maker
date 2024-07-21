@@ -13,7 +13,7 @@ contract FactoryTest is Test {
     address indexed token1,
     uint256 token0Scale,
     uint256 token1Scale,
-    uint256 indexed upperBound,
+    uint256 indexed strike,
     address lendgine
   );
 
@@ -57,15 +57,15 @@ contract FactoryTest is Test {
     factory.createLendgine(address(1), address(2), 18, 18, 1e18);
   }
 
-  function helpParametersZero() private {
-    (address token0, address token1, uint256 token0Scale, uint256 token1Scale, uint256 upperBound) =
+  function helpParametersZero() private view {
+    (address token0, address token1, uint256 token0Scale, uint256 token1Scale, uint256 strike) =
       factory.parameters();
 
     assertEq(address(0), token0);
     assertEq(address(0), token1);
     assertEq(0, token0Scale);
     assertEq(0, token1Scale);
-    assertEq(0, upperBound);
+    assertEq(0, strike);
   }
 
   function testParameters() external {

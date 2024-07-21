@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity >=0.5.0;
+pragma solidity 0.8.19;
 
 import { IImmutableState } from "./IImmutableState.sol";
 
@@ -15,11 +15,8 @@ interface IPair is IImmutableState {
   /// @notice The total amount of liquidity shares in the pair
   function totalLiquidity() external view returns (uint256);
 
-  /// @notice The swap fee 
+  /// @notice The fee charged on each swap
   function swapFee() external view returns (uint256);
-
-  // /// @notice The protocol fee
-  // function protocolFee() external view returns (uint256);
 
   /// @notice The implementation of the capped power invariant
   /// @return valid True if the invariant is satisfied

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity ^0.8.4;
+pragma solidity 0.8.19;
 
 import { ImmutableState } from "./ImmutableState.sol";
 import { ReentrancyGuard } from "./ReentrancyGuard.sol";
@@ -12,6 +12,8 @@ import { Balance } from "../libraries/Balance.sol";
 import { FullMath } from "../libraries/FullMath.sol";
 import { SafeCast } from "../libraries/SafeCast.sol";
 import { SafeTransferLib } from "../libraries/SafeTransferLib.sol";
+import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
+
 
 abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
   /*//////////////////////////////////////////////////////////////
@@ -45,12 +47,13 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
   /// @inheritdoc IPair
   uint256 public override totalLiquidity;
 
+
   /*//////////////////////////////////////////////////////////////
                             SWAP FEE STORAGE
     //////////////////////////////////////////////////////////////*/
 
     uint256 private constant FEE_DENOMINATOR = 1e6;
-    uint256 private constant SWAP_FEE_VALUE = 3000; // 30 bps (3000/1e6)
+    uint256 private constant SWAP_FEE_VALUE = 7500; // 75 bps (3000/1e6)
 
     /// @inheritdoc IPair
     function swapFee() external pure override returns (uint256) {
@@ -61,30 +64,41 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
                               PAIR LOGIC
     //////////////////////////////////////////////////////////////*/
 
-  /*/////////////////////////////////////////////////////////////////////////////
-  //  The capped power-4 invariant is x + y * U >= (3y^(4/3) / 8L) * U^4       //
-  //  and is implemented in a + b >= c + d where:                              //
-  //  a = scale0 * 1e18 = x * 1e18                                             //
-  //  b = scale1 * upperBound = y * U                                          //
-  //  c = (scale1 * 4/3) * 3 / 8 = 3y^(4/3) / 8                                //
-  //  d = upperBound ** 4 = U^4                                                //
-  /////////////////////////////////////////////////////////////////////////////*/
-
   /// @inheritdoc IPair
-  function invariant(uint256 amount0, uint256 amount1, uint256 liquidity) public view override returns (bool) {
+  function invariant(
+    uint256 amount0,
+    uint256 amount1,
+    uint256 liquidity
+  ) public view returns (bool) {
     if (liquidity == 0) return (amount0 == 0 && amount1 == 0);
+    require(liquidity > 0, "liquidity must be greater than zero");
 
-    uint256 scale0 = FullMath.mulDiv(amount0 * token0Scale, 1e18, liquidity);
-    uint256 scale1 = FullMath.mulDiv(amount1 * token1Scale, 1e18, liquidity);
+    // Convert amounts to UD60x18 types
+    UD60x18 udAmount0 = ud(amount0);
+    UD60x18 udAmount1 = ud(amount1);
+    UD60x18 udLiquidity = ud(liquidity);
+    UD60x18 udStrike = ud(strike);
 
-    if (scale1 > 2 * upperBound) revert InvariantError();
+    // Calculate (amount0 / totalLiquidity) and (amount1 / totalLiquidity)
+    UD60x18 scale0 = div(udAmount0, udLiquidity);
+    UD60x18 scale1 = div(udAmount1, udLiquidity);
 
-    uint256 a = scale0 * 1e18;
-    uint256 b = scale1 * upperBound;
-    uint256 c = (3 * scale1 * FullMath.mulDiv(scale1, scale1, 1e18)) / 8;
-    uint256 d = upperBound ** 4;
+    // Convert 2 to UD60x18
+    UD60x18 two = ud(2e18);
 
-    return a + b >= c + d;
+    if (scale1.unwrap() > mul(two, udStrike).unwrap()) 
+    revert InvariantError();
+
+    // Calculate strike^4
+    UD60x18 expo4 = ud(4e18);
+    UD60x18 strikeTo4 = pow(udStrike, expo4);
+
+    // Calculate (strike^4 - (4/5 * scale1))^(5/4)
+    UD60x18 insideTerm = sub(strikeTo4, mul(scale1, div(ud(4e18), ud(5e18))));
+    UD60x18 fracExpo = div(ud(5e18), ud(4e18));
+    UD60x18 termToExpo = pow(insideTerm, fracExpo);
+
+    return scale0.unwrap() >= termToExpo.unwrap();
   }
 
   /// @dev assumes liquidity is non-zero
