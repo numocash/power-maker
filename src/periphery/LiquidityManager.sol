@@ -198,7 +198,7 @@ contract LiquidityManager is Multicall, Payment, SelfPermit, IPairMintCallback {
   }
 
   /// @notice Removes from a liquidity position
-  function removeLiquidity(RemoveLiquidityParams calldata params) external payable checkDeadline(params.deadline) {
+  function removeLiquidity(RemoveLiquidityParams calldata params) external checkDeadline(params.deadline) {
     address lendgine = LendgineAddress.computeAddress(
       factory, params.token0, params.token1, params.token0Exp, params.token1Exp, params.upperBound
     );
@@ -227,7 +227,7 @@ contract LiquidityManager is Multicall, Payment, SelfPermit, IPairMintCallback {
   }
 
   /// @notice Collects interest owed to the callers liqudity position
-  function collect(CollectParams calldata params) external payable returns (uint256 amount) {
+  function collect(CollectParams calldata params) external returns (uint256 amount) {
     ILendgine(params.lendgine).accruePositionInterest();
 
     address recipient = params.recipient == address(0) ? address(this) : params.recipient;
