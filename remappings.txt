@@ -1,2 +1,4 @@
 forge-std/=lib/forge-std/src/
 create3-factory/=lib/create3-factory/src/
+@prb/math/=node_modules/@prb/math/
+@prb/test/=node_modules/@prb/test/src/
