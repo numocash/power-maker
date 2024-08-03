@@ -64,7 +64,10 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
                               PAIR LOGIC
     //////////////////////////////////////////////////////////////*/
 
-  /// @inheritdoc IPair
+  /// checks quartic invariant holds
+  /// @param amount0 base token
+  /// @param amount1 speculative token
+  /// @param liquidity total liquidity 
   function invariant(
     uint256 amount0,
     uint256 amount1,
@@ -89,13 +92,13 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
     if (scale1.unwrap() > mul(two, udStrike).unwrap()) 
     revert InvariantError();
 
-    // Calculate strike^4
-    UD60x18 expo4 = ud(4e18);
+    // Calculate strike^3
+    UD60x18 expo4 = ud(3e18);
     UD60x18 strikeTo4 = pow(udStrike, expo4);
 
-    // Calculate (strike^4 - (4/5 * scale1))^(5/4)
-    UD60x18 insideTerm = sub(strikeTo4, mul(scale1, div(ud(4e18), ud(5e18))));
-    UD60x18 fracExpo = div(ud(5e18), ud(4e18));
+    // Calculate (strike^3 - (3/4 * scale1))^(4/3)
+    UD60x18 insideTerm = sub(strikeTo4, mul(scale1, div(ud(3e18), ud(4e18))));
+    UD60x18 fracExpo = div(ud(4e18), ud(3e18));
     UD60x18 termToExpo = pow(insideTerm, fracExpo);
 
     return scale0.unwrap() >= termToExpo.unwrap();

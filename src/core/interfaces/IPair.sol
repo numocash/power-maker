@@ -18,7 +18,7 @@ interface IPair is IImmutableState {
   /// @notice The fee charged on each swap
   function swapFee() external view returns (uint256);
 
-  /// @notice The implementation of the capped power invariant
+  /// @notice The implementation of the quartic invariant
   /// @return valid True if the invariant is satisfied
   function invariant(uint256 amount0, uint256 amount1, uint256 liquidity) external view returns (bool);
 
