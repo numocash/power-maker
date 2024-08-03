@@ -254,7 +254,7 @@ contract LendgineRouter is Multicall, Payment, SelfPermit, SwapHelper, IMintCall
   }
 
   /// @notice Take an option position and withdraw it fully into token1
-  function burn(BurnParams calldata params) external payable checkDeadline(params.deadline) returns (uint256 amount) {
+  function burn(BurnParams calldata params) external checkDeadline(params.deadline) returns (uint256 amount) {
     address lendgine = LendgineAddress.computeAddress(
       factory, params.token0, params.token1, params.token0Exp, params.token1Exp, params.upperBound
     );
