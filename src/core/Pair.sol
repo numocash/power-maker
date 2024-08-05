@@ -16,7 +16,7 @@ import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
 
 /// @title Quartic Function Market Maker 
 /// @author Robert Leifke
-/// @notice A CFMM whose payoff is quartic when lend out
+/// @notice A CFMM that buys more speculative tokens when lend out
 abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
   /*//////////////////////////////////////////////////////////////
                                  EVENTS
