@@ -1,27 +1,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity >=0.5.0;
+pragma solidity 0.8.19;
 
 import { IImmutableState } from "./IImmutableState.sol";
 
 /// @notice AMM implementing the capped power invariant
 /// @author Kyle Scott and Robert Leifke
-interface IPair is IImmutableState {
-  /// @notice The amount of token0 in the pair
+interface IQFMM is IImmutableState {
+  /// @notice The amount of token0 in the QFMM
   function reserve0() external view returns (uint120);
 
-  /// @notice The amount of token1 in the pair
+  /// @notice The amount of token1 in the QFMM
   function reserve1() external view returns (uint120);
 
-  /// @notice The total amount of liquidity shares in the pair
+  /// @notice The total amount of liquidity shares in the QFMM
   function totalLiquidity() external view returns (uint256);
 
-  /// @notice The swap fee 
+  /// @notice The fee charged on each swap
   function swapFee() external view returns (uint256);
 
-  // /// @notice The protocol fee
-  // function protocolFee() external view returns (uint256);
-
-  /// @notice The implementation of the capped power invariant
+  /// @notice The implementation of the quartic invariant
   /// @return valid True if the invariant is satisfied
   function invariant(uint256 amount0, uint256 amount1, uint256 liquidity) external view returns (bool);
 

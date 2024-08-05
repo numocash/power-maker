@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity ^0.8.0;
 
-import { IPairMintCallback } from "../../src/core/interfaces/callback/IPairMintCallback.sol";
+import { IQFMMMintCallback } from "../../src/core/interfaces/callback/IQFMMMintCallback.sol";
 import { IMintCallback } from "../../src/core/interfaces/callback/IMintCallback.sol";
 import { ISwapCallback } from "../../src/core/interfaces/callback/ISwapCallback.sol";
 
 import { SafeTransferLib } from "../../src/libraries/SafeTransferLib.sol";
 
-contract CallbackHelper is IPairMintCallback, IMintCallback, ISwapCallback {
-  struct PairMintCallbackData {
+contract CallbackHelper is IQFMMMintCallback, IMintCallback, ISwapCallback {
+  struct QFMMMintCallbackData {
     address token0;
     address token1;
     uint256 amount0;
@@ -16,8 +16,8 @@ contract CallbackHelper is IPairMintCallback, IMintCallback, ISwapCallback {
     address payer;
   }
 
-  function pairMintCallback(uint256, bytes calldata data) external override {
-    PairMintCallbackData memory decoded = abi.decode(data, (PairMintCallbackData));
+  function QFMMMintCallback(uint256, bytes calldata data) external override {
+    QFMMMintCallbackData memory decoded = abi.decode(data, (QFMMMintCallbackData));
 
     if (decoded.payer == address(this)) {
       if (decoded.amount0 > 0) SafeTransferLib.safeTransfer(decoded.token0, msg.sender, decoded.amount0);

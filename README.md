@@ -2,18 +2,9 @@
 
 ![numo_banner](images/numo_readme.png)
 
+Numo uniquely enables **depeg insurance** on all stablecoins and pegged pairs. One could conversly use Numo to speculate on the fluctuations between pegged tokens.  
 
-The repository contains the smart contract suite for **Numo**, the solidity implementation of a [*replicating market maker*](https://arxiv.org/abs/2103.14769) on the EVM. 
-
-TLDR: Numo allows anyone to short or long any token with leverage using pooled liquidity. 
-
-## Replicating Market Maker
-
-The principle idea of a replicating market maker is that any options strategy can be constructed on the EVM simply by altering the trading function of a CFMM. Thus, turning a CFMM into an *exotic leverage token*.
-
-### Leverage Token 
-
-When someone uses **Numo** to get leverage, they are swapping their token into a leverage token which automatically rebalances at every price to reflect 100x leverage when it hits its strike. Think of it as a 2x leverage token on ETH (ex. ETH2x-FLI), but instead its 100x and supports any token.
+The solidity implementation for Numo is contained in this repository and was inspired by math that shows virtually [any option strategy can be constructed using CFMMs](https://arxiv.org/abs/2103.14769). 
 
 ## Local development
 
@@ -23,13 +14,12 @@ This project uses [Foundry](https://github.com/foundry-rs/foundry) as the develo
 
 ```bash
 forge install foundry-rs/forge-std
-
 ```
 To handle high-percision fixed point airithmic, Numo uses the `PRBMath` Library.
 ```bash
 bun add @prb/math
 ```
-Yu need to add this to your remappings.txt file:
+You need to add this to your remappings.txt file:
 
 ```
 @prb/math/=node_modules/@prb/math/
@@ -64,3 +54,7 @@ then, in a separate terminal,
 ```bash
 sh setup.sh
 ```
+
+## Licences
+
+The smart contracts that make up Numo are licensed under the GPL-3.0 unless specified otherwise.

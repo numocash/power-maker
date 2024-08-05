@@ -22,7 +22,7 @@ abstract contract Payment {
     require(msg.sender == weth, "Not WETH9");
   }
 
-  function unwrapWETH(uint256 amountMinimum, address recipient) public payable {
+  function unwrapWETH(uint256 amountMinimum, address recipient) public {
     uint256 balanceWETH = Balance.balance(weth);
     if (balanceWETH < amountMinimum) revert InsufficientOutputError();
 
@@ -32,7 +32,7 @@ abstract contract Payment {
     }
   }
 
-  function sweepToken(address token, uint256 amountMinimum, address recipient) public payable {
+  function sweepToken(address token, uint256 amountMinimum, address recipient) public {
     uint256 balanceToken = Balance.balance(token);
     if (balanceToken < amountMinimum) revert InsufficientOutputError();
 

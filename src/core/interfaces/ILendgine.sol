@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity >=0.5.0;
 
-import { IPair } from "./IPair.sol";
+import { IQFMM } from "./IQFMM.sol";
 
 /// @notice Lending engine for borrowing and lending liquidity provider shares
 /// @author Kyle Scott and Robert Leifke
-interface ILendgine is IPair {
+interface ILendgine is IQFMM {
   /// @notice Returns information about a position given the controllers address
   function positions(address) external view returns (uint256, uint256, uint256);
 

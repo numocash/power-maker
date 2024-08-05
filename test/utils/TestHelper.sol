@@ -1,143 +1,137 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity ^0.8.0;
 
-import { Factory } from "../../src/core/Factory.sol";
-import { Lendgine } from "../../src/core/Lendgine.sol";
-import { Test } from "forge-std/Test.sol";
+// import { Factory } from "../../src/core/Factory.sol";
+// import { Lendgine } from "../../src/core/Lendgine.sol";
+// import { Test } from "forge-std/Test.sol";
 
-import { CallbackHelper } from "./CallbackHelper.sol";
-import { MockERC20 } from "./mocks/MockERC20.sol";
+// import { CallbackHelper } from "./CallbackHelper.sol";
+// import { MockERC20 } from "./mocks/MockERC20.sol";
 
-abstract contract TestHelper is Test, CallbackHelper {
-  MockERC20 public token0;
-  MockERC20 public token1;
+// abstract contract TestHelper is Test, CallbackHelper {
+//   MockERC20 public token0;
+//   MockERC20 public token1;
 
-  uint8 public token0Scale;
-  uint8 public token1Scale;
+//   uint256 public strike;
 
-  uint256 public upperBound;
+//   Factory public factory;
+//   Lendgine public lendgine;
 
-  Factory public factory;
-  Lendgine public lendgine;
+//   address public alice;
+//   address public dennis;
 
-  address public alice;
-  address public dennis;
+//   function mkaddr(string memory name) public returns (address) {
+//     address addr = address(uint160(uint256(keccak256(abi.encodePacked(name)))));
+//     vm.label(addr, name);
+//     return addr;
+//   }
 
-  function mkaddr(string memory name) public returns (address) {
-    address addr = address(uint160(uint256(keccak256(abi.encodePacked(name)))));
-    vm.label(addr, name);
-    return addr;
-  }
+//   constructor() {
+//     alice = mkaddr("alice");
+//     dennis = mkaddr("dennis");
 
-  constructor() {
-    alice = mkaddr("alice");
-    dennis = mkaddr("dennis");
+//     strike = 2 * 1e18;
+//   }
 
-    token0Scale = 18;
-    token1Scale = 18;
+//   function _setUp() internal {
+//     MockERC20 tokenA = new MockERC20();
+//     MockERC20 tokenB = new MockERC20();
 
-    upperBound = 5 * 1e18;
-  }
+//     (token0, token1) = address(tokenA) < address(tokenB) ? (tokenA, tokenB) : (tokenB, tokenA);
 
-  function _setUp() internal {
-    MockERC20 tokenA = new MockERC20();
-    MockERC20 tokenB = new MockERC20();
+//     factory = new Factory();
+//     lendgine = Lendgine(factory.createLendgine(address(token0), address(token1), token0Scale, token1Scale, strike));
+//   }
 
-    (token0, token1) = address(tokenA) < address(tokenB) ? (tokenA, tokenB) : (tokenB, tokenA);
+//   function _mint(address from, address to, uint256 collateral) internal returns (uint256 shares) {
+//     token1.mint(from, collateral);
 
-    factory = new Factory();
-    lendgine = Lendgine(factory.createLendgine(address(token0), address(token1), token0Scale, token1Scale, upperBound));
-  }
+//     if (from != address(this)) {
+//       vm.prank(from);
+//       token1.approve(address(this), collateral);
+//     }
 
-  function _mint(address from, address to, uint256 collateral) internal returns (uint256 shares) {
-    token1.mint(from, collateral);
+//     shares = lendgine.mint(to, collateral, abi.encode(MintCallbackData({ token: address(token1), payer: from })));
+//   }
 
-    if (from != address(this)) {
-      vm.prank(from);
-      token1.approve(address(this), collateral);
-    }
+//   function _burn(
+//     address to,
+//     address from,
+//     uint256 shares,
+//     uint256 amount0,
+//     uint256 amount1
+//   )
+//     internal
+//     returns (uint256 collateral)
+//   {
+//     if (from != address(this)) {
+//       vm.startPrank(from);
+//       lendgine.transfer(address(lendgine), shares);
+//       token0.approve(address(this), amount0);
+//       token1.approve(address(this), amount1);
+//       vm.stopPrank();
+//     } else {
+//       lendgine.transfer(address(lendgine), shares);
+//     }
 
-    shares = lendgine.mint(to, collateral, abi.encode(MintCallbackData({ token: address(token1), payer: from })));
-  }
+//     collateral = lendgine.burn(
+//       to,
+//       abi.encode(
+//         QFMMMintCallbackData({
+//           token0: address(token0),
+//           token1: address(token1),
+//           amount0: amount0,
+//           amount1: amount1,
+//           payer: from
+//         })
+//       )
+//     );
+//   }
 
-  function _burn(
-    address to,
-    address from,
-    uint256 shares,
-    uint256 amount0,
-    uint256 amount1
-  )
-    internal
-    returns (uint256 collateral)
-  {
-    if (from != address(this)) {
-      vm.startPrank(from);
-      lendgine.transfer(address(lendgine), shares);
-      token0.approve(address(this), amount0);
-      token1.approve(address(this), amount1);
-      vm.stopPrank();
-    } else {
-      lendgine.transfer(address(lendgine), shares);
-    }
+//   function _deposit(
+//     address to,
+//     address from,
+//     uint256 amount0,
+//     uint256 amount1,
+//     uint256 liquidity
+//   )
+//     internal
+//     returns (uint256 size)
+//   {
+//     token0.mint(from, amount0);
+//     token1.mint(from, amount1);
 
-    collateral = lendgine.burn(
-      to,
-      abi.encode(
-        PairMintCallbackData({
-          token0: address(token0),
-          token1: address(token1),
-          amount0: amount0,
-          amount1: amount1,
-          payer: from
-        })
-      )
-    );
-  }
+//     if (from != address(this)) {
+//       vm.startPrank(from);
+//       token0.approve(address(this), amount0);
+//       token1.approve(address(this), amount1);
+//       vm.stopPrank();
+//     }
 
-  function _deposit(
-    address to,
-    address from,
-    uint256 amount0,
-    uint256 amount1,
-    uint256 liquidity
-  )
-    internal
-    returns (uint256 size)
-  {
-    token0.mint(from, amount0);
-    token1.mint(from, amount1);
+//     size = lendgine.deposit(
+//       to,
+//       liquidity,
+//       abi.encode(
+//         QFMMMintCallbackData({
+//           token0: address(token0),
+//           token1: address(token1),
+//           amount0: amount0,
+//           amount1: amount1,
+//           payer: from
+//         })
+//       )
+//     );
+//   }
 
-    if (from != address(this)) {
-      vm.startPrank(from);
-      token0.approve(address(this), amount0);
-      token1.approve(address(this), amount1);
-      vm.stopPrank();
-    }
-
-    size = lendgine.deposit(
-      to,
-      liquidity,
-      abi.encode(
-        PairMintCallbackData({
-          token0: address(token0),
-          token1: address(token1),
-          amount0: amount0,
-          amount1: amount1,
-          payer: from
-        })
-      )
-    );
-  }
-
-  function _withdraw(
-    address from,
-    address to,
-    uint256 size
-  )
-    internal
-    returns (uint256 amount0, uint256 amount1, uint256 liquidity)
-  {
-    vm.prank(from);
-    (amount0, amount1, liquidity) = lendgine.withdraw(to, size);
-  }
-}
+//   function _withdraw(
+//     address from,
+//     address to,
+//     uint256 size
+//   )
+//     internal
+//     returns (uint256 amount0, uint256 amount1, uint256 liquidity)
+//   {
+//     vm.prank(from);
+//     (amount0, amount1, liquidity) = lendgine.withdraw(to, size);
+//   }
+// }

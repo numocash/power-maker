@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 import { ERC20 } from "./ERC20.sol";
 import { JumpRate } from "./JumpRate.sol";
-import { Pair } from "./Pair.sol";
+import { QFMM } from "./QFMM.sol";
 
 import { ILendgine } from "./interfaces/ILendgine.sol";
 import { IMintCallback } from "./interfaces/callback/IMintCallback.sol";
@@ -13,8 +13,12 @@ import { FullMath } from "../libraries/FullMath.sol";
 import { Position } from "./libraries/Position.sol";
 import { SafeTransferLib } from "../libraries/SafeTransferLib.sol";
 import { SafeCast } from "../libraries/SafeCast.sol";
+import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
 
-contract Lendgine is ERC20, JumpRate, Pair, ILendgine {
+/// @title Lending and borrowing of CFMMs
+/// @author Robert Leifke
+/// @notice Change accounting logic
+contract Lendgine is ERC20, JumpRate, QFMM, ILendgine {
   using Position for mapping(address => Position.Info);
   using Position for Position.Info;
 
@@ -212,22 +216,60 @@ contract Lendgine is ERC20, JumpRate, Pair, ILendgine {
   /// @inheritdoc ILendgine
   function convertLiquidityToShare(uint256 liquidity) public view override returns (uint256) {
     uint256 _totalLiquidityBorrowed = totalLiquidityBorrowed; // SLOAD
-    return _totalLiquidityBorrowed == 0 ? liquidity : FullMath.mulDiv(liquidity, totalSupply, _totalLiquidityBorrowed);
-  }
+    if (_totalLiquidityBorrowed == 0) {
+        return liquidity;
+    } else {
+        // Convert parameters to UD60x18 types
+        UD60x18 udLiquidity = ud(liquidity);
+        UD60x18 udTotalSupply = ud(totalSupply);
+        UD60x18 udTotalLiquidityBorrowed = ud(_totalLiquidityBorrowed);
+
+        UD60x18 result = mul(udLiquidity, div(udTotalSupply, udTotalLiquidityBorrowed));
+
+        // Return the result as a uint256
+        return result.unwrap();
+    }
+}
 
   /// @inheritdoc ILendgine
   function convertShareToLiquidity(uint256 shares) public view override returns (uint256) {
-    return FullMath.mulDiv(totalLiquidityBorrowed, shares, totalSupply);
+    // Convert parameters to UD60x18 types
+    UD60x18 udShares = ud(shares);
+    UD60x18 udTotalSupply = ud(totalSupply);
+    UD60x18 udTotalLiquidityBorrowed = ud(totalLiquidityBorrowed);
+
+    // Perform the calculation using UD60x18 arithmetic
+    UD60x18 result = mul(udTotalLiquidityBorrowed, div(udShares, udTotalSupply));
+
+    // Return the result as a uint256
+    return result.unwrap();
   }
 
   /// @inheritdoc ILendgine
   function convertCollateralToLiquidity(uint256 collateral) public view override returns (uint256) {
-    return FullMath.mulDiv(collateral * token1Scale, 1e18, 2 * upperBound);
+    UD60x18 udCollateral = ud(collateral);
+    UD60x18 udStrike = ud(strike);
+    UD60x18 two = ud(2e18);
+
+    // Perform the calculation using UD60x18 arithmetic
+    UD60x18 result = div(udCollateral, mul(two, udStrike));
+
+    // Return the result as a uint256
+    return result.unwrap();
   }
 
   /// @inheritdoc ILendgine
   function convertLiquidityToCollateral(uint256 liquidity) public view override returns (uint256) {
-    return FullMath.mulDiv(liquidity, 2 * upperBound, 1e18) / token1Scale;
+    // Convert parameters to UD60x18 types
+    UD60x18 udLiquidity = ud(liquidity);
+    UD60x18 udStrike = ud(strike);
+    UD60x18 two = ud(2e18);
+
+    // Perform the calculation using UD60x18 arithmetic
+    UD60x18 result = mul(udLiquidity, mul(two, udStrike));
+
+    // Return the result as a uint256
+    return result.unwrap();
   }
 
   /*//////////////////////////////////////////////////////////////
