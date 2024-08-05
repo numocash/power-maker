@@ -15,7 +15,9 @@ import { SafeTransferLib } from "../libraries/SafeTransferLib.sol";
 import { SafeCast } from "../libraries/SafeCast.sol";
 import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
 
-
+/// @title Lending and borrowing of CFMMs
+/// @author Robert Leifke
+/// @notice Change accounting logic
 contract Lendgine is ERC20, JumpRate, Pair, ILendgine {
   using Position for mapping(address => Position.Info);
   using Position for Position.Info;
