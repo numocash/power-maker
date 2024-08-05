@@ -7,10 +7,10 @@ interface IImmutableState {
   /// @notice The contract that deployed the lendgine
   function factory() external view returns (address);
 
-  /// @notice The "numeraire" or "base" token in the pair
+  /// @notice The "numeraire" or "base" token in the QFMM
   function token0() external view returns (address);
 
-  /// @notice The "risky" or "speculative" token in the pair
+  /// @notice The "risky" or "speculative" token in the QFMM
   function token1() external view returns (address);
 
   /// @notice Maximum exchange rate (token0/token1)

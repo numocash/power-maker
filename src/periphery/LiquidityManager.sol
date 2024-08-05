@@ -5,12 +5,12 @@ import { Multicall } from "./Multicall.sol";
 import { Payment } from "./Payment.sol";
 import { SelfPermit } from "./SelfPermit.sol";
 import { ILendgine } from "../core/interfaces/ILendgine.sol";
-import { IPairMintCallback } from "../core/interfaces/callback/IPairMintCallback.sol";
+import { IQFMMMintCallback } from "../core/interfaces/callback/IQFMMMintCallback.sol";
 import { FullMath } from "../libraries/FullMath.sol";
 import { LendgineAddress } from "./libraries/LendgineAddress.sol";
 
 
-contract LiquidityManager is Multicall, Payment, SelfPermit, IPairMintCallback {
+contract LiquidityManager is Multicall, Payment, SelfPermit, IQFMMMintCallback {
     /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
@@ -68,7 +68,7 @@ contract LiquidityManager is Multicall, Payment, SelfPermit, IPairMintCallback {
     /*//////////////////////////////////////////////////////////////
                                 CALLBACK
     //////////////////////////////////////////////////////////////*/
-    struct PairMintCallbackData {
+    struct QFMMMintCallbackData {
         address token0;
         address token1;
         uint256 token0Exp;
@@ -80,8 +80,8 @@ contract LiquidityManager is Multicall, Payment, SelfPermit, IPairMintCallback {
     }
 
     /// @notice callback that sends the underlying tokens for the specified amount of liquidity shares
-    function pairMintCallback(uint256, bytes calldata data) external {
-        PairMintCallbackData memory decoded = abi.decode(data, (PairMintCallbackData));
+    function QFMMMintCallback(uint256, bytes calldata data) external {
+        QFMMMintCallbackData memory decoded = abi.decode(data, (QFMMMintCallbackData));
 
         address lendgine = LendgineAddress.computeAddress(
             factory, decoded.token0, decoded.token1, decoded.token0Exp, decoded.token1Exp, decoded.strike
@@ -136,7 +136,7 @@ contract LiquidityManager is Multicall, Payment, SelfPermit, IPairMintCallback {
             params.recipient,
             params.liquidity,
             abi.encode(
-                PairMintCallbackData({
+                QFMMMintCallbackData({
                     token0: params.token0,
                     token1: params.token1,
                     token0Exp: params.token0Exp,

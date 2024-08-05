@@ -5,14 +5,14 @@ import { IImmutableState } from "./IImmutableState.sol";
 
 /// @notice AMM implementing the capped power invariant
 /// @author Kyle Scott and Robert Leifke
-interface IPair is IImmutableState {
-  /// @notice The amount of token0 in the pair
+interface IQFMM is IImmutableState {
+  /// @notice The amount of token0 in the QFMM
   function reserve0() external view returns (uint120);
 
-  /// @notice The amount of token1 in the pair
+  /// @notice The amount of token1 in the QFMM
   function reserve1() external view returns (uint120);
 
-  /// @notice The total amount of liquidity shares in the pair
+  /// @notice The total amount of liquidity shares in the QFMM
   function totalLiquidity() external view returns (uint256);
 
   /// @notice The fee charged on each swap

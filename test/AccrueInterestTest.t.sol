@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 
 // contract AccrueInterestTest is TestHelper {
@@ -88,7 +88,7 @@ pragma solidity ^0.8.0;
 //       address(this),
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1e18,

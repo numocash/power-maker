@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { Position } from "../src/core/libraries/Position.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 

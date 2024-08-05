@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 // import { Factory } from "../src/core/Factory.sol";
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 
 // // test for max tvl and min price of liquidity

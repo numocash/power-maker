@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 import { ERC20 } from "./ERC20.sol";
 import { JumpRate } from "./JumpRate.sol";
-import { Pair } from "./Pair.sol";
+import { QFMM } from "./QFMM.sol";
 
 import { ILendgine } from "./interfaces/ILendgine.sol";
 import { IMintCallback } from "./interfaces/callback/IMintCallback.sol";
@@ -18,7 +18,7 @@ import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
 /// @title Lending and borrowing of CFMMs
 /// @author Robert Leifke
 /// @notice Change accounting logic
-contract Lendgine is ERC20, JumpRate, Pair, ILendgine {
+contract Lendgine is ERC20, JumpRate, QFMM, ILendgine {
   using Position for mapping(address => Position.Info);
   using Position for Position.Info;
 

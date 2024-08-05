@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 // import { FullMath } from "../src/libraries/FullMath.sol";
 
@@ -77,11 +77,11 @@ pragma solidity ^0.8.0;
 //     token1.approve(address(this), 3 ether);
 //     vm.stopPrank();
 
-//     vm.expectRevert(Pair.InvariantError.selector);
+//     vm.expectRevert(QFMM.InvariantError.selector);
 //     lendgine.burn(
 //       alice,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 0.5 ether,
@@ -106,7 +106,7 @@ pragma solidity ^0.8.0;
 //     lendgine.burn(
 //       alice,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 0.5 ether,
@@ -117,7 +117,7 @@ pragma solidity ^0.8.0;
 //     );
 //   }
 
-//   function testEmitPair() external {
+//   function testEmitQFMM() external {
 //     vm.prank(alice);
 //     lendgine.transfer(address(lendgine), 0.5 ether);
 
@@ -131,7 +131,7 @@ pragma solidity ^0.8.0;
 //     lendgine.burn(
 //       alice,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 0.5 ether,
@@ -198,7 +198,7 @@ pragma solidity ^0.8.0;
 //       address(this),
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1e18,
@@ -219,7 +219,7 @@ pragma solidity ^0.8.0;
 //     uint256 collateral = lendgine.burn(
 //       address(this),
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 0.25 ether,

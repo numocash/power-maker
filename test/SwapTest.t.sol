@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 // import { FullMath } from "../src/libraries/FullMath.sol";
 
@@ -55,7 +55,7 @@ pragma solidity ^0.8.0;
 //     vm.prank(alice);
 //     token0.approve(address(this), 23 ether);
 
-//     vm.expectRevert(Pair.InvariantError.selector);
+//     vm.expectRevert(QFMM.InvariantError.selector);
 //     lendgine.swap(
 //       alice,
 //       0,

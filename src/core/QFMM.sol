@@ -4,8 +4,8 @@ pragma solidity 0.8.19;
 import { ImmutableState } from "./ImmutableState.sol";
 import { ReentrancyGuard } from "./ReentrancyGuard.sol";
 
-import { IPair } from "./interfaces/IPair.sol";
-import { IPairMintCallback } from "./interfaces/callback/IPairMintCallback.sol";
+import { IQFMM } from "./interfaces/IQFMM.sol";
+import { IQFMMMintCallback } from "./interfaces/callback/IQFMMMintCallback.sol";
 import { ISwapCallback } from "./interfaces/callback/ISwapCallback.sol";
 
 import { Balance } from "../libraries/Balance.sol";
@@ -17,7 +17,7 @@ import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
 /// @title Quartic Function Market Maker 
 /// @author Robert Leifke
 /// @notice A CFMM that buys more speculative tokens when lend out
-abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
+abstract contract QFMM is ImmutableState, ReentrancyGuard, IQFMM {
   /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
@@ -40,13 +40,13 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
                                  STORAGE
     //////////////////////////////////////////////////////////////*/
 
-  /// @inheritdoc IPair
+  /// @inheritdoc IQFMM
   uint120 public override reserve0;
 
-  /// @inheritdoc IPair
+  /// @inheritdoc IQFMM
   uint120 public override reserve1;
 
-  /// @inheritdoc IPair
+  /// @inheritdoc IQFMM
   uint256 public override totalLiquidity;
 
 
@@ -57,13 +57,13 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
     uint256 private constant FEE_DENOMINATOR = 1e6;
     uint256 private constant SWAP_FEE_VALUE = 7500; // 75 bps (3000/1e6)
 
-    /// @inheritdoc IPair
+    /// @inheritdoc IQFMM
     function swapFee() external pure override returns (uint256) {
         return SWAP_FEE_VALUE;
     }
 
   /*//////////////////////////////////////////////////////////////
-                              PAIR LOGIC
+                              QFMM LOGIC
     //////////////////////////////////////////////////////////////*/
 
   /// checks quartic invariant holds
@@ -114,7 +114,7 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
 
     uint256 balance0Before = Balance.balance(token0);
     uint256 balance1Before = Balance.balance(token1);
-    IPairMintCallback(msg.sender).pairMintCallback(liquidity, data);
+    IQFMMMintCallback(msg.sender).QFMMMintCallback(liquidity, data);
     uint256 amount0In = Balance.balance(token0) - balance0Before;
     uint256 amount1In = Balance.balance(token1) - balance1Before;
 
@@ -152,7 +152,7 @@ abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
     emit Burn(amount0, amount1, liquidity, to);
   }
 
-  /// @inheritdoc IPair
+  /// @inheritdoc IQFMM
   function swap(address to, uint256 amount0Out, uint256 amount1Out, bytes calldata data) external override nonReentrant {
     if (amount0Out == 0 && amount1Out == 0) revert InsufficientOutputError();
 

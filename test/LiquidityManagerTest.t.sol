@@ -234,10 +234,10 @@ pragma solidity ^0.8.0;
 
 //   function testCallbackValidation() external {
 //     vm.expectRevert(LiquidityManager.ValidationError.selector);
-//     liquidityManager.pairMintCallback(
+//     liquidityManager.QFMMMintCallback(
 //       0,
 //       abi.encode(
-//         LiquidityManager.PairMintCallbackData({
+//         LiquidityManager.QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           token0Exp: token0Scale,

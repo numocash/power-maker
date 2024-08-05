@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 // import { FullMath } from "../src/libraries/FullMath.sol";
 
@@ -67,7 +67,7 @@ pragma solidity ^0.8.0;
 //     _withdraw(alice, alice, 1 ether);
 //   }
 
-//   function testEmitPair() external {
+//   function testEmitQFMM() external {
 //     vm.expectEmit(true, false, false, true, address(lendgine));
 //     emit Burn(1 ether, 8 ether, 1 ether, alice);
 //     _withdraw(alice, alice, 1 ether);
@@ -157,7 +157,7 @@ pragma solidity ^0.8.0;
 //       address(this),
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1e18,

@@ -77,7 +77,7 @@ pragma solidity ^0.8.0;
 //     collateral = lendgine.burn(
 //       to,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: amount0,
@@ -112,7 +112,7 @@ pragma solidity ^0.8.0;
 //       to,
 //       liquidity,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: amount0,

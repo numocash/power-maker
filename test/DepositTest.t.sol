@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 
 // contract DepositTest is TestHelper {
@@ -66,12 +66,12 @@ pragma solidity ^0.8.0;
 //     token1.approve(address(this), 7 ether);
 //     vm.stopPrank();
 
-//     vm.expectRevert(Pair.InvariantError.selector);
+//     vm.expectRevert(QFMM.InvariantError.selector);
 //     lendgine.deposit(
 //       alice,
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1 ether,
@@ -97,7 +97,7 @@ pragma solidity ^0.8.0;
 //       alice,
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1 ether,
@@ -108,7 +108,7 @@ pragma solidity ^0.8.0;
 //     );
 //   }
 
-//   function testEmitPair() external {
+//   function testEmitQFMM() external {
 //     token0.mint(alice, 1 ether);
 //     token1.mint(alice, 8 ether);
 
@@ -123,7 +123,7 @@ pragma solidity ^0.8.0;
 //       alice,
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1 ether,
@@ -199,7 +199,7 @@ pragma solidity ^0.8.0;
 //       address(this),
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1e18,

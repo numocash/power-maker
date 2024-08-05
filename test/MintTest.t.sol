@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 // import { Lendgine } from "../src/core/Lendgine.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { TestHelper } from "./utils/TestHelper.sol";
 
 // contract MintTest is TestHelper {
@@ -89,7 +89,7 @@ pragma solidity ^0.8.0;
 //     lendgine.mint(alice, 5 ether, abi.encode(MintCallbackData({ token: address(token1), payer: alice })));
 //   }
 
-//   function testEmitPair() external {
+//   function testEmitQFMM() external {
 //     token1.mint(alice, 5 ether);
 
 //     vm.prank(alice);
@@ -138,7 +138,7 @@ pragma solidity ^0.8.0;
 //       address(this),
 //       1 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 1e18,

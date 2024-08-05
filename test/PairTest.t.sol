@@ -2,12 +2,12 @@
 pragma solidity 0.8.19;
 
 // import { Test } from "../lib/forge-std/src/Test.sol";
-// import { Pair } from "../src/core/Pair.sol";
+// import { QFMM } from "../src/core/QFMM.sol";
 // import { MockERC20 } from "../test/utils/mocks/MockERC20.sol";
 // import { UD60x18, ud } from "@prb/math/src/UD60x18.sol";
 
-// contract PairInvariantTest is Test {
-//     Pair pair;
+// contract QFMMInvariantTest is Test {
+//     QFMM QFMM;
 //     MockERC20 token0;
 //     MockERC20 token1;
 
@@ -15,7 +15,7 @@ pragma solidity 0.8.19;
 //         token0 = new MockERC20("Circle Dollar", "USDC");
 //         token1 = new MockERC20("Ether", "ETH");
 
-//         pair = new Pair(address(token0), address(token1));
+//         QFMM = new QFMM(address(token0), address(token1));
 
 //         _deposit(address(this), address(this), 1 ether, 8 ether, 1 ether);
 
@@ -27,7 +27,7 @@ pragma solidity 0.8.19;
 //         uint256 amount1 = 200 ether;
 //         uint256 liquidity = 100 ether;
 
-//         assertTrue(pair.invariant(
+//         assertTrue(QFMM.invariant(
 //                                     amount0, 
 //                                     amount1, 
 //                                     liquidity
@@ -39,7 +39,7 @@ pragma solidity 0.8.19;
 //         uint256 amount1 = 200 ether;
 //         uint256 liquidity = 0;
 
-//         assertTrue(!pair.invariant(
+//         assertTrue(!QFMM.invariant(
 //                                     amount0, 
 //                                     amount1, 
 //                                     liquidity
@@ -51,7 +51,7 @@ pragma solidity 0.8.19;
 //         uint256 amount1 = 1000 ether; // Invalid amount1
 //         uint256 liquidity = 100 ether;
 
-//         assertTrue(!pair.invariant(
+//         assertTrue(!QFMM.invariant(
 //                                     amount0, 
 //                                     amount1, 
 //                                     liquidity
@@ -63,7 +63,7 @@ pragma solidity 0.8.19;
 //         uint256 amount1 = 0;
 //         uint256 liquidity = 0;
 
-//         assertTrue(pair.invariant(
+//         assertTrue(QFMM.invariant(
 //                                     amount0, 
 //                                     amount1, 
 //                                     liquidity
@@ -73,7 +73,7 @@ pragma solidity 0.8.19;
 //         amount1 = 1 ether;
 //         liquidity = 1 ether;
 
-//         assertTrue(pair.invariant(
+//         assertTrue(QFMM.invariant(
 //                                     amount0, 
 //                                     amount1, 
 //                                     liquidity

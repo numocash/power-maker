@@ -8,7 +8,7 @@ pragma solidity ^0.8.0;
 // import { MockERC20 } from "./utils/mocks/MockERC20.sol";
 
 // import { IUniswapV2Factory } from "../src/periphery/UniswapV2/interfaces/IUniswapV2Factory.sol";
-// import { IUniswapV2Pair } from "../src/periphery/UniswapV2/interfaces/IUniswapV2Pair.sol";
+// import { IUniswapV2QFMM } from "../src/periphery/UniswapV2/interfaces/IUniswapV2QFMM.sol";
 // import { IUniswapV3Factory } from "../src/periphery/UniswapV3/interfaces/IUniswapV3Factory.sol";
 // import { IUniswapV3Pool } from "../src/periphery/UniswapV3/interfaces/IUniswapV3Pool.sol";
 
@@ -20,7 +20,7 @@ pragma solidity ^0.8.0;
 //   LendgineRouter public lendgineRouter;
 
 //   IUniswapV2Factory public uniswapV2Factory = IUniswapV2Factory(0xB7f907f7A9eBC822a80BD25E224be42Ce0A698A0);
-//   IUniswapV2Pair public uniswapV2Pair;
+//   IUniswapV2QFMM public uniswapV2QFMM;
 //   IUniswapV3Factory public uniswapV3Factory = IUniswapV3Factory(0x0227628f3F023bb0B980b67D528571c95c6DaC1c);
 //   IUniswapV3Pool public uniswapV3Pool = IUniswapV3Pool(0x51aDC79e7760aC5317a0d05e7a64c4f9cB2d4369); // uni / eth / 100 bps
 
@@ -39,11 +39,11 @@ pragma solidity ^0.8.0;
 //       address(0)
 //     );
 
-//     // set up the uniswap v2 pair
-//     uniswapV2Pair = IUniswapV2Pair(uniswapV2Factory.createPair(address(token0), address(token1)));
-//     token0.mint(address(uniswapV2Pair), 100 ether);
-//     token1.mint(address(uniswapV2Pair), 100 ether);
-//     uniswapV2Pair.mint(address(this));
+//     // set up the uniswap v2 QFMM
+//     uniswapV2QFMM = IUniswapV2QFMM(uniswapV2Factory.createQFMM(address(token0), address(token1)));
+//     token0.mint(address(uniswapV2QFMM), 100 ether);
+//     token1.mint(address(uniswapV2QFMM), 100 ether);
+//     uniswapV2QFMM.mint(address(this));
 
 //     _deposit(address(this), address(this), 100 ether, 800 ether, 100 ether);
 //   }
@@ -74,7 +74,7 @@ pragma solidity ^0.8.0;
 //       address(this),
 //       10 ether,
 //       abi.encode(
-//         PairMintCallbackData({
+//         QFMMMintCallbackData({
 //           token0: address(token0),
 //           token1: address(token1),
 //           amount0: 5.40225 ether,
@@ -115,8 +115,8 @@ pragma solidity ^0.8.0;
 
 //     // check uniswap
 //     // swap 0.1 ether of token 0 to token 1
-//     assertEq(100.1 ether, token0.balanceOf(address(uniswapV2Pair)));
-//     assertApproxEqRel(99.9 ether, token1.balanceOf(address(uniswapV2Pair)), 0.001 ether);
+//     assertEq(100.1 ether, token0.balanceOf(address(uniswapV2QFMM)));
+//     assertApproxEqRel(99.9 ether, token1.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
 
 //     // check lendgine storage
 //     assertEq(0.1 ether, lendgine.totalLiquidityBorrowed());
@@ -160,8 +160,8 @@ pragma solidity ^0.8.0;
 
 //     // check uniswap
 //     // swap 0.98 ether of token 0 to token 1
-//     assertEq(100.98 ether, token0.balanceOf(address(uniswapV2Pair)));
-//     assertApproxEqRel(99.02 ether, token1.balanceOf(address(uniswapV2Pair)), 0.001 ether);
+//     assertEq(100.98 ether, token0.balanceOf(address(uniswapV2QFMM)));
+//     assertApproxEqRel(99.02 ether, token1.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
 
 //     // check lendgine storage
 //     assertEq(0.98 ether, lendgine.totalLiquidityBorrowed());
@@ -353,8 +353,8 @@ pragma solidity ^0.8.0;
 //     assertEq(0, lendgine.totalLiquidityBorrowed());
 
 //     // check uniswap
-//     assertApproxEqRel(100 ether, token0.balanceOf(address(uniswapV2Pair)), 0.001 ether);
-//     assertApproxEqRel(100 ether, token1.balanceOf(address(uniswapV2Pair)), 0.001 ether);
+//     assertApproxEqRel(100 ether, token0.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
+//     assertApproxEqRel(100 ether, token1.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
 
 //     // check user balances
 //     assertApproxEqRel(0.1 ether, token1.balanceOf(alice), 1 ether);
@@ -421,8 +421,8 @@ pragma solidity ^0.8.0;
 //     assertEq(0, lendgine.totalLiquidityBorrowed());
 
 //     // check uniswap
-//     assertApproxEqRel(100 ether, token0.balanceOf(address(uniswapV2Pair)), 0.001 ether);
-//     assertApproxEqRel(100 ether, token1.balanceOf(address(uniswapV2Pair)), 0.001 ether);
+//     assertApproxEqRel(100 ether, token0.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
+//     assertApproxEqRel(100 ether, token1.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
 
 //     // check user balances
 //     assertApproxEqRel(0.1 ether, token1.balanceOf(alice), 1 ether);
@@ -705,8 +705,8 @@ pragma solidity ^0.8.0;
 //     assertEq(0, lendgine.totalLiquidityBorrowed());
 
 //     // check uniswap
-//     assertApproxEqRel(100 ether, token0.balanceOf(address(uniswapV2Pair)), 0.001 ether);
-//     assertApproxEqRel(100 ether, token1.balanceOf(address(uniswapV2Pair)), 0.001 ether);
+//     assertApproxEqRel(100 ether, token0.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
+//     assertApproxEqRel(100 ether, token1.balanceOf(address(uniswapV2QFMM)), 0.001 ether);
 
 //     // check user balances
 //     assertEq(balanceBefore, token1.balanceOf(address(alice)));

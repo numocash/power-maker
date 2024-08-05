@@ -82,10 +82,10 @@ interface IERC1155 is IERC165 {
     /// @return The _owner's balance of the token type requested
     function balanceOf(address _owner, uint256 _id) external view returns (uint256);
 
-    /// @notice Get the balance of multiple account/token pairs
+    /// @notice Get the balance of multiple account/token QFMMs
     /// @param _owners The addresses of the token holders
     /// @param _ids ID of the tokens
-    /// @return The _owner's balance of the token types requested (i.e. balance for each (owner, id) pair)
+    /// @return The _owner's balance of the token types requested (i.e. balance for each (owner, id) QFMM)
     function balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids)
         external
         view

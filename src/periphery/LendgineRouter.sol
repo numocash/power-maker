@@ -8,7 +8,7 @@ import { SwapHelper } from "./SwapHelper.sol";
 
 import { ILendgine } from "../core/interfaces/ILendgine.sol";
 import { IMintCallback } from "../core/interfaces/callback/IMintCallback.sol";
-import { IPairMintCallback } from "../core/interfaces/callback/IPairMintCallback.sol";
+import { IQFMMMintCallback } from "../core/interfaces/callback/IQFMMMintCallback.sol";
 
 import { FullMath } from "../libraries/FullMath.sol";
 import { LendgineAddress } from "./libraries/LendgineAddress.sol";
@@ -17,7 +17,7 @@ import { SafeTransferLib } from "../libraries/SafeTransferLib.sol";
 
 /// @notice Contract for automatically entering and exiting option positions
 /// @author Kyle Scott and Robert Leifke
-contract LendgineRouter is Multicall, Payment, SelfPermit, SwapHelper, IMintCallback, IPairMintCallback {
+contract LendgineRouter is Multicall, Payment, SelfPermit, SwapHelper, IMintCallback, IQFMMMintCallback {
   /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
@@ -172,7 +172,7 @@ contract LendgineRouter is Multicall, Payment, SelfPermit, SwapHelper, IMintCall
                                BURN LOGIC
     //////////////////////////////////////////////////////////////*/
 
-  struct PairMintCallbackData {
+  struct QFMMMintCallbackData {
     address token0;
     address token1;
     uint256 token0Exp;
@@ -187,8 +187,8 @@ contract LendgineRouter is Multicall, Payment, SelfPermit, SwapHelper, IMintCall
   }
 
   /// @notice Provide the tokens for the liquidity that is owed
-  function pairMintCallback(uint256 liquidity, bytes calldata data) external override {
-    PairMintCallbackData memory decoded = abi.decode(data, (PairMintCallbackData));
+  function QFMMMintCallback(uint256 liquidity, bytes calldata data) external override {
+    QFMMMintCallbackData memory decoded = abi.decode(data, (QFMMMintCallbackData));
 
     address lendgine = LendgineAddress.computeAddress(
       factory, decoded.token0, decoded.token1, decoded.token0Exp, decoded.token1Exp, decoded.strike
@@ -266,7 +266,7 @@ contract LendgineRouter is Multicall, Payment, SelfPermit, SwapHelper, IMintCall
     amount = ILendgine(lendgine).burn(
       address(this),
       abi.encode(
-        PairMintCallbackData({
+        QFMMMintCallbackData({
           token0: params.token0,
           token1: params.token1,
           token0Exp: params.token0Exp,
