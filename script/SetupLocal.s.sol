@@ -65,9 +65,9 @@ contract SetupLocalScript is Script {
     );
 
     // deploy new lendgines
-    console2.log("usdc/weth lendgine: ", factory.createLendgine(usdc, weth, 6, 18, usdcWethBound));
-    console2.log("weth/uni lendgine: ", factory.createLendgine(weth, uni, 18, 18, wethUniBound));
-    console2.log("uni/weth lendgine: ", factory.createLendgine(uni, weth, 18, 18, uniWethBound));
+    console2.log("usdc/weth lendgine: ", factory.createLendgine(usdc, weth, usdcWethBound));
+    console2.log("weth/uni lendgine: ", factory.createLendgine(weth, uni, wethUniBound));
+    console2.log("uni/weth lendgine: ", factory.createLendgine(uni, weth, uniWethBound));
 
     // mint tokens to addr
     IWETH9(weth).deposit{ value: 100 ether }();

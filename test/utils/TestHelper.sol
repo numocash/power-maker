@@ -12,9 +12,6 @@ pragma solidity ^0.8.0;
 //   MockERC20 public token0;
 //   MockERC20 public token1;
 
-//   uint8 public token0Scale;
-//   uint8 public token1Scale;
-
 //   uint256 public strike;
 
 //   Factory public factory;
@@ -33,10 +30,7 @@ pragma solidity ^0.8.0;
 //     alice = mkaddr("alice");
 //     dennis = mkaddr("dennis");
 
-//     token0Scale = 18;
-//     token1Scale = 18;
-
-//     strike = 5 * 1e18;
+//     strike = 2 * 1e18;
 //   }
 
 //   function _setUp() internal {

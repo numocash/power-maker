@@ -21,10 +21,7 @@ abstract contract ImmutableState is IImmutableState {
   constructor() {
     factory = msg.sender;
 
-    uint128 _token0Exp;
-    uint128 _token1Exp;
-
-    (token0, token1, _token0Exp, _token1Exp, strike) = Factory(msg.sender).parameters();
+    (token0, token1, strike, , ) = Factory(msg.sender).parameters();
 
   }
 }
