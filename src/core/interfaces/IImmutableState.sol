@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity >=0.5.0;
 
-/// @notice Immutable state interface
+/// @title Immutable state interface
 /// @author Kyle Scott and Robert Leifke
 interface IImmutableState {
   /// @notice The contract that deployed the lendgine

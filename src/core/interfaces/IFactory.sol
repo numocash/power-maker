@@ -22,7 +22,7 @@ interface IFactory {
     function parameters()
         external
         view
-        returns (address token0, address token1, uint256 strike);
+        returns (address token0, address token1, uint256 strike, uint8 token0Decimals, uint8 token1Decimals);
 
     /// @notice Deploys a lendgine contract by transiently setting the parameters storage slots
     /// and clearing it after the lendgine has been deployed
