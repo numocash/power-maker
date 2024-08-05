@@ -14,7 +14,9 @@ import { SafeCast } from "../libraries/SafeCast.sol";
 import { SafeTransferLib } from "../libraries/SafeTransferLib.sol";
 import { UD60x18, ud, mul, div, pow, sub } from "@prb/math/src/UD60x18.sol";
 
-
+/// @title Quartic Function Market Maker 
+/// @author Robert Leifke
+/// @notice A CFMM whose payoff is quartic when lend out
 abstract contract Pair is ImmutableState, ReentrancyGuard, IPair {
   /*//////////////////////////////////////////////////////////////
                                  EVENTS
