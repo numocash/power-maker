@@ -1,11 +1,5 @@
 # 🤖 PowerMaker
 
-![numo_banner](images/numo_readme.png)
-
-Numo uniquely enables **depeg insurance** on all stablecoins and pegged pairs. One could conversly use Numo to speculate on the fluctuations between pegged tokens.  
-
-The solidity implementation for Numo is contained in this repository and was inspired by math that shows virtually [any option strategy can be constructed using CFMMs](https://arxiv.org/abs/2103.14769). 
-
 ## Local development
 
 This project uses [Foundry](https://github.com/foundry-rs/foundry) as the development framework.
