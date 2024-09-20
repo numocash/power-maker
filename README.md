@@ -1,4 +1,4 @@
-# 🤖 Numo
+# 🤖 PowerMaker
 
 ![numo_banner](images/numo_readme.png)
 
