@@ -1,4 +1,4 @@
-# 🤖 PowerMaker
+# ⚡ PowerMaker
 
 ## Local development
 
